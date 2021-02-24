@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="petApp.WindowLayoutController"
+      prefHeight="400.0" prefWidth="400.0">
+
+    <MenuBar>
+        <menus>
+            <Menu text="Edit">
+                <MenuItem text="Create"          onAction="#createPet"/>
+                <MenuItem text="Delete selected" onAction="#deletePet" fx:id="deleteMenuButton" />
+                <MenuItem text="Edit selected"   onAction="#editPet"   fx:id="editMenuButton"   />
+            </Menu>
+        </menus>
+    </MenuBar>
+    <TableView fx:id="petTable">
+        <columns>
+            <TableColumn text="Kind"  fx:id="kindTableColumn"/>
+            <TableColumn text="Name"  fx:id="nameTableColumn"/>
+            <TableColumn text="Owner" fx:id="ownerTableColumn"/>
+            <TableColumn text="Age"   fx:id="ageTableColumn"/>
+        </columns>
+    </TableView>
+</VBox>
