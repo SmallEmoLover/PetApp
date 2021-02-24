@@ -6,18 +6,18 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Pet {
-    //TODO: owner, age, month сделать необязательными, реализовать для этого PetBuilder
+    //TODO: owner, year, month сделать необязательными, реализовать для этого PetBuilder
     private StringProperty kind;
     private StringProperty name;
     private StringProperty owner;
-    private IntegerProperty age;
+    private IntegerProperty year;
     private IntegerProperty month;
 
-    public Pet(String kind, String name, String owner, int age, int month) {
+    public Pet(String kind, String name, String owner, int year, int month) {
         setKind(kind);
         setName(name);
         setOwner(owner);
-        setAge(age);
+        setYear(year);
         setMonth(month);
     }
 
@@ -37,10 +37,10 @@ public class Pet {
         return owner;
     }
 
-    public IntegerProperty ageIntegerProperty() {
-        if (age == null)
-            age = new SimpleIntegerProperty();
-        return age;
+    public IntegerProperty yearIntegerProperty() {
+        if (year == null)
+            year = new SimpleIntegerProperty();
+        return year;
     }
 
     public IntegerProperty monthIntegerProperty() {
@@ -61,8 +61,8 @@ public class Pet {
         ownerStringProperty().set(value);
     }
 
-    public void setAge(int value) {
-        ageIntegerProperty().set(value);
+    public void setYear(int value) {
+        yearIntegerProperty().set(value);
     }
 
     public void setMonth(int value) {
@@ -81,8 +81,8 @@ public class Pet {
         return ownerStringProperty().get();
     }
 
-    public int getAge() {
-        return ageIntegerProperty().get();
+    public int getYear() {
+        return yearIntegerProperty().get();
     }
 
     public int getMonth() {
