@@ -1,9 +1,15 @@
 package petApp;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.HashMap;
 
 public class Pet {
     //TODO: owner, year, month сделать необязательными, реализовать для этого PetBuilder
@@ -19,6 +25,21 @@ public class Pet {
         setOwner(owner);
         setYear(year);
         setMonth(month);
+    }
+
+    public double getAge() {
+        return new BigDecimal(getYear() + getMonth() / 12.0).
+                setScale(2, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    public Pet(JsonElement jsonPet) {
+        Gson parser = new Gson();
+        HashMap<String, String> pet = parser.fromJson(jsonPet, HashMap.class);
+        setKind(pet.get("kind"));
+        setName(pet.get("name"));
+        setOwner(pet.get("owner"));
+        setYear(Integer.parseInt(pet.get("year")));
+        setMonth(Integer.parseInt(pet.get("month")));
     }
 
     public StringProperty kindStringProperty() {
