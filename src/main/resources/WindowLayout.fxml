@@ -6,6 +6,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="petApp.WindowLayoutController"
@@ -14,18 +16,41 @@
     <MenuBar>
         <menus>
             <Menu text="Edit">
-                <MenuItem text="Create"          onAction="#createPet"/>
-                <MenuItem text="Delete selected" onAction="#deletePet" fx:id="deleteMenuButton" />
-                <MenuItem text="Edit selected"   onAction="#editPet"   fx:id="editMenuButton"   />
+                <MenuItem text="Create"          onAction="#createPet" accelerator="Ctrl + N"/>
+                <MenuItem text="Edit selected"   onAction="#editPet"   fx:id="editMenuButton" accelerator="Ctrl + E"/>
+                <MenuItem text="Delete selected" onAction="#deletePet" fx:id="deleteMenuButton" accelerator="Ctrl + D"/>
             </Menu>
         </menus>
     </MenuBar>
-    <TableView fx:id="petTable">
-        <columns>
-            <TableColumn text="Kind"  fx:id="kindTableColumn"/>
-            <TableColumn text="Name"  fx:id="nameTableColumn"/>
-            <TableColumn text="Owner" fx:id="ownerTableColumn"/>
-            <TableColumn text="Age"   fx:id="ageTableColumn"/>
-        </columns>
-    </TableView>
+    <HBox>
+        <TableView fx:id="petTable">
+            <columns>
+                <TableColumn text="Kind"  fx:id="kindTableColumn"/>
+                <TableColumn text="Name"  fx:id="nameTableColumn"/>
+                <TableColumn text="Owner" fx:id="ownerTableColumn"/>
+                <TableColumn text="Age"   fx:id="ageTableColumn"/>
+            </columns>
+        </TableView>
+        <GridPane prefWidth="100" prefHeight="100" alignment="CENTER" fx:id="infoPane">
+            <children>
+
+                <ImageView GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowSpan="2"
+                           fx:id="infoPaneImage" fitWidth="50" fitHeight="50"/>
+
+                <Text GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="infoPaneNameText"/>
+
+                <Text GridPane.columnIndex="1" GridPane.rowIndex="4" text="Kind:"/>
+                <Text GridPane.columnIndex="2" GridPane.rowIndex="4" fx:id="infoPaneKindText"/>
+
+                <Text GridPane.columnIndex="1" GridPane.rowIndex="5" text="Owner:"/>
+                <Text GridPane.columnIndex="2" GridPane.rowIndex="5" fx:id="infoPaneOwnerText"/>
+
+                <Text GridPane.columnIndex="1" GridPane.rowIndex="6" text="Years:"/>
+                <Text GridPane.columnIndex="2" GridPane.rowIndex="6" fx:id="infoPaneYearText"/>
+
+                <Text GridPane.columnIndex="1" GridPane.rowIndex="7" text="Months:"/>
+                <Text GridPane.columnIndex="2" GridPane.rowIndex="7" fx:id="infoPaneMonthText"/>
+            </children>
+        </GridPane>
+    </HBox>
 </VBox>

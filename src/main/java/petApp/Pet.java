@@ -27,12 +27,7 @@ public class Pet {
         setMonth(month);
     }
 
-    public double getAge() {
-        return new BigDecimal(getYear() + getMonth() / 12.0).
-                setScale(2, RoundingMode.HALF_UP).doubleValue();
-    }
-
-    public Pet(JsonElement jsonPet) {
+    public Pet(JsonElement jsonPet) throws Exception {
         Gson parser = new Gson();
         HashMap<String, String> pet = parser.fromJson(jsonPet, HashMap.class);
         setKind(pet.get("kind"));
@@ -40,6 +35,11 @@ public class Pet {
         setOwner(pet.get("owner"));
         setYear(Integer.parseInt(pet.get("year")));
         setMonth(Integer.parseInt(pet.get("month")));
+    }
+
+    public double getAge() {
+        return BigDecimal.valueOf(getYear() + getMonth() / 12.0).
+                setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public StringProperty kindStringProperty() {

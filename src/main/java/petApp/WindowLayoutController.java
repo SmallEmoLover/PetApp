@@ -10,14 +10,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,23 +36,30 @@ public class WindowLayoutController implements Initializable {
     private TableColumn<Pet, Integer> kindTableColumn;
 
     @FXML
+    private GridPane infoPane;
+    @FXML
+    private ImageView infoPaneImage;
+    @FXML
+    private Text infoPaneKindText;
+    @FXML
+    private Text infoPaneNameText;
+    @FXML
+    private Text infoPaneOwnerText;
+    @FXML
+    private Text infoPaneYearText;
+    @FXML
+    private Text infoPaneMonthText;
+
+    @FXML
     private MenuItem editMenuButton;
     @FXML
     private MenuItem deleteMenuButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        nameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        kindTableColumn.setCellValueFactory(new PropertyValueFactory<>("kind"));
-        ownerTableColumn.setCellValueFactory(new PropertyValueFactory<>("owner"));
-        ageTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Pet, Double>, ObservableValue<Double>>() {
-            @Override
-            public ObservableValue<Double> call(TableColumn.CellDataFeatures<Pet, Double> param) {
-                return new SimpleObjectProperty<Double>(param.getValue().getAge());
-            }
-        });
 
         Gson parser = new Gson();
+        Image defaultImage = null;
         try {
             String jsonData = Files.readString(Path.of(getClass().getResource("/Pets.json").toURI()));
             JsonArray jsonPets = parser.fromJson(jsonData, JsonArray.class);
@@ -60,9 +67,38 @@ public class WindowLayoutController implements Initializable {
             for (JsonElement jsonPet: jsonPets)
                 pets.add(new Pet(jsonPet));
             petTable.setItems(pets);
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+            defaultImage = new Image(getClass().getResource("/img.jpg").toString());
+            infoPaneImage.setImage(defaultImage);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR).showAndWait();
         }
+
+
+        nameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        kindTableColumn.setCellValueFactory(new PropertyValueFactory<>("kind"));
+        ownerTableColumn.setCellValueFactory(new PropertyValueFactory<>("owner"));
+        ageTableColumn.setCellValueFactory(new Callback<>() {
+            @Override
+            public ObservableValue<Double> call(TableColumn.CellDataFeatures<Pet, Double> param) {
+                return new SimpleObjectProperty<Double>(param.getValue().getAge());
+            }
+        });
+
+        infoPane.setVisible(false);
+
+        petTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
+                if (observable.getValue() != null) {
+                    infoPane.setVisible(true);
+                    infoPaneNameText.setText(observable.getValue().getName());
+                    infoPaneKindText.setText(observable.getValue().getKind());
+                    infoPaneOwnerText.setText(observable.getValue().getOwner());
+                    infoPaneYearText.setText(String.valueOf(observable.getValue().getYear()));
+                    infoPaneMonthText.setText(String.valueOf(observable.getValue().getMonth()));
+                }
+                else {
+                    infoPane.setVisible(false);
+                }
+        });
     }
 
     public void createPet(ActionEvent actionEvent) {
@@ -72,5 +108,7 @@ public class WindowLayoutController implements Initializable {
     }
 
     public void deletePet(ActionEvent actionEvent) {
+        SelectionModel selection = petTable.getSelectionModel();
+        petTable.getItems().remove(selection.getSelectedItem());
     }
 }

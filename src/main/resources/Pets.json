@@ -1,0 +1,16 @@
+[
+  {
+    "name" : "vasya",
+    "kind" : "cat",
+    "owner": "nastya",
+    "year" : "10",
+    "month": "3"
+  },
+  {
+    "name" : "peppa",
+    "kind" : "pig",
+    "owner": "idk",
+    "year" : "7",
+    "month": "6"
+  }
+]
