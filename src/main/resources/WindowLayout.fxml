@@ -8,6 +8,9 @@
 
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.image.ImageView?>
+
+<?import java.net.URL?>
+
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="petApp.WindowLayoutController"
@@ -53,4 +56,5 @@
             </children>
         </GridPane>
     </HBox>
+    <stylesheets> <URL value="@windowstyle.css"/> </stylesheets>
 </VBox>

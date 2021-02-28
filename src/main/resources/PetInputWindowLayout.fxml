@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Path?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="petApp.PetInputWindowController"
+      prefHeight="400.0" prefWidth="600.0">
+
+    <GridPane prefWidth="100" prefHeight="100" alignment="CENTER">
+        <children>
+            <Text GridPane.columnIndex="1" GridPane.rowIndex="1" text="Select an image:"/>
+            <Button GridPane.columnIndex="1" GridPane.rowIndex="2" text="Select" onAction="#fileSelection"/>
+            <ImageView GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.columnSpan="2"
+                fx:id="petImage" fitWidth="100" fitHeight="100"/>
+
+            <Text GridPane.columnIndex="1" GridPane.rowIndex="3" text="Name:"/>
+            <TextField styleClass="a" GridPane.columnIndex="2" GridPane.rowIndex="3" fx:id="petName"/>
+
+            <Text GridPane.columnIndex="1" GridPane.rowIndex="4" text="Kind:"/>
+            <TextField GridPane.columnIndex="2" GridPane.rowIndex="4" fx:id="petKind"/>
+
+            <Text GridPane.columnIndex="1" GridPane.rowIndex="5" text="Owner:"/>
+            <TextField GridPane.columnIndex="2" GridPane.rowIndex="5" fx:id="petOwner"/>
+
+            <Text GridPane.columnIndex="1" GridPane.rowIndex="6" text="Years:"/>
+            <Spinner min="0" max="99" amountToStepBy="1" GridPane.columnIndex="2" GridPane.rowIndex="6" fx:id="petYear"/>
+
+            <Text GridPane.columnIndex="1" GridPane.rowIndex="7" text="Months:"/>
+            <Spinner max="11" min="0" GridPane.columnIndex="2" GridPane.rowIndex="7" fx:id="petMonth"/>
+        </children>
+    </GridPane>
+
+</VBox>

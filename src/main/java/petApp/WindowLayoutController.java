@@ -9,15 +9,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -101,10 +105,25 @@ public class WindowLayoutController implements Initializable {
         });
     }
 
-    public void createPet(ActionEvent actionEvent) {
+    public void createPet(ActionEvent actionEvent) throws Exception{
+        FXMLLoader inputWindowLoader = new FXMLLoader();
+        inputWindowLoader.setLocation(Main.class.getResource("/PetInputWindowLayout.fxml"));
+        Stage inputStage = new Stage();
+        inputStage.setScene(new Scene(inputWindowLoader.load()));
+
+        inputStage.showAndWait();
     }
 
-    public void editPet(ActionEvent actionEvent) {
+    public void editPet(ActionEvent actionEvent) throws IOException {
+        FXMLLoader inputWindowLoader = new FXMLLoader();
+        inputWindowLoader.setLocation(Main.class.getResource("/PetInputWindowLayout.fxml"));
+        Stage inputStage = new Stage();
+        Scene scene = new Scene(inputWindowLoader.load());
+        PetInputWindowController controller = inputWindowLoader.getController();
+        controller.setEditablePet(petTable.getSelectionModel().getSelectedItem());
+        inputStage.setScene(scene);
+
+        inputStage.showAndWait();
     }
 
     public void deletePet(ActionEvent actionEvent) {
