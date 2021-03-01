@@ -5,3 +5,5 @@ petApp/Pet.java
 petApp/WindowLayoutController.java
  petApp.WindowLayoutController
  petApp.WindowLayoutController$1
+petApp/PetInputWindowController.java
+ petApp.PetInputWindowController

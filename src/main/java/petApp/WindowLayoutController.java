@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -93,11 +94,7 @@ public class WindowLayoutController implements Initializable {
         petTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
                 if (observable.getValue() != null) {
                     infoPane.setVisible(true);
-                    infoPaneNameText.setText(observable.getValue().getName());
-                    infoPaneKindText.setText(observable.getValue().getKind());
-                    infoPaneOwnerText.setText(observable.getValue().getOwner());
-                    infoPaneYearText.setText(String.valueOf(observable.getValue().getYear()));
-                    infoPaneMonthText.setText(String.valueOf(observable.getValue().getMonth()));
+                    setInfoPane(observable.getValue());
                 }
                 else {
                     infoPane.setVisible(false);
@@ -106,22 +103,32 @@ public class WindowLayoutController implements Initializable {
     }
 
     public void createPet(ActionEvent actionEvent) throws Exception{
-        FXMLLoader inputWindowLoader = new FXMLLoader();
-        inputWindowLoader.setLocation(Main.class.getResource("/PetInputWindowLayout.fxml"));
-        Stage inputStage = new Stage();
-        inputStage.setScene(new Scene(inputWindowLoader.load()));
-
-        inputStage.showAndWait();
+        Pet editablePet = new Pet("", "", "", 0, 0);
+        startPetInputWindow(editablePet);
+        if (editablePet.isCorrect()) {
+            petTable.getItems().add(editablePet);
+        }
     }
 
     public void editPet(ActionEvent actionEvent) throws IOException {
+        Pet editablePet = petTable.getSelectionModel().getSelectedItem();
+        startPetInputWindow(editablePet);
+        petTable.refresh();
+        setInfoPane(editablePet);
+    }
+
+    private void startPetInputWindow(Pet editablePet) throws IOException {
+
         FXMLLoader inputWindowLoader = new FXMLLoader();
         inputWindowLoader.setLocation(Main.class.getResource("/PetInputWindowLayout.fxml"));
-        Stage inputStage = new Stage();
+
         Scene scene = new Scene(inputWindowLoader.load());
         PetInputWindowController controller = inputWindowLoader.getController();
-        controller.setEditablePet(petTable.getSelectionModel().getSelectedItem());
+        controller.setEditablePet(editablePet);
+
+        Stage inputStage = new Stage();
         inputStage.setScene(scene);
+        inputStage.initModality(Modality.APPLICATION_MODAL);
 
         inputStage.showAndWait();
     }
@@ -129,5 +136,13 @@ public class WindowLayoutController implements Initializable {
     public void deletePet(ActionEvent actionEvent) {
         SelectionModel selection = petTable.getSelectionModel();
         petTable.getItems().remove(selection.getSelectedItem());
+    }
+
+    private void setInfoPane(Pet pet) {
+        infoPaneNameText.setText(pet.getName());
+        infoPaneKindText.setText(pet.getKind());
+        infoPaneOwnerText.setText(pet.getOwner());
+        infoPaneYearText.setText(String.valueOf(pet.getYear()));
+        infoPaneMonthText.setText(String.valueOf(pet.getMonth()));
     }
 }

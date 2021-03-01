@@ -37,6 +37,12 @@ public class Pet {
         setMonth(Integer.parseInt(pet.get("month")));
     }
 
+    public boolean isCorrect() {
+        return getName().matches("[A-Za-z]+") &&
+                getOwner().matches("[A-Za-z]+") &&
+                getKind().matches("[A-Za-z]+");
+    }
+
     public double getAge() {
         return BigDecimal.valueOf(getYear() + getMonth() / 12.0).
                 setScale(2, RoundingMode.HALF_UP).doubleValue();
